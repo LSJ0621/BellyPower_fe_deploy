@@ -36,7 +36,7 @@ export default{
     methods:{
         async sendCodeToServer(code){
             try {
-                const response = await axios.post("http://localhost:8080/user/google/doLogin", { code });
+                const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/user/google/doLogin`, { code });
 
                 if (response.data.token) {
                     // 로그인 성공 - 토큰 저장 후 홈으로 이동
@@ -58,7 +58,7 @@ export default{
         },
         async fetchUserInfo() {
             try {
-                const response = await axios.get("http://localhost:8080/user/userInfo", {
+                const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/user/userInfo`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`
                     }
