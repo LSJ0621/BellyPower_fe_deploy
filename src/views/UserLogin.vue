@@ -145,7 +145,7 @@ export default {
       ],
       googleUrl: "https://accounts.google.com/o/oauth2/auth",
       googleClientID:"752078374240-4tdtnn7i8de5jpavh9qbupu7nbimt5rn.apps.googleusercontent.com",
-      googleRedirectUrl:`${process.env.VUE_APP_API_BASE_URL}/oauth/google/redirect`,
+      googleRedirectUrl:"https://www.stomachforce.shop/oauth/google/redirect",
       googleScope: "openid email profile",
     }
   },
