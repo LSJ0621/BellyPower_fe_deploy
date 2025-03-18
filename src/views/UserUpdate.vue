@@ -183,15 +183,17 @@ export default {
         formData.append("phoneNumber", this.userInfo.userPhoneNumber);
         formData.append("gender", this.userInfo.gender);
         if (this.profilePhotoFile) {
-      // ✅ 새로 업로드된 파일이 있으면 그대로 추가
-        formData.append("profilePhoto", this.profilePhotoFile);
-          } else {
-            // ✅ 기존 프로필 사진이 있을 경우, URL의 이미지를 Blob으로 변환 후 전송
-            if (this.userInfo.profilePhoto) {
-              const existingImageBlob = await this.urlToBlob(this.userInfo.profilePhoto);
-              formData.append("profilePhoto", existingImageBlob, "profilePhoto.jpg");
+          // ✅ 새로 업로드된 파일이 있으면 그대로 추가
+          formData.append("profilePhoto", this.profilePhotoFile);
+        } else {
+          // ✅ 기존 프로필 사진 유지: URL을 Blob으로 변환 후 File 객체로 FormData에 추가
+          if (this.userInfo.profilePhoto) {
+            const existingImageFile = await this.urlToFile(this.userInfo.profilePhoto);
+            if (existingImageFile) {
+              formData.append("profilePhoto", existingImageFile);
             }
           }
+        }
         console.log(formData);
         await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/user/update`, formData, {
           headers: {
@@ -213,6 +215,18 @@ export default {
       } catch (error) {
         console.error("회원정보 수정 실패", error);
         alert("회원정보 수정에 실패했습니다.");
+      }
+    },
+    async urlToFile(imageUrl) {
+      try {
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+
+        // ✅ Blob을 File 객체로 변환 (File 객체는 FormData에서 `MultipartFile`로 전송 가능)
+        return new File([blob], "profilePhoto.jpg", { type: blob.type });
+      } catch (error) {
+        console.error("🚨 기존 프로필 사진을 File로 변환하는 중 오류 발생:", error);
+        return null;
       }
     },
     handleFileChange(event) {
