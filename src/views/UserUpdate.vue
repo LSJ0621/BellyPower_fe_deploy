@@ -184,6 +184,9 @@ export default {
         formData.append("gender", this.userInfo.gender);
         if (this.profilePhotoFile) {
           formData.append("profilePhoto", this.profilePhotoFile);
+        } else if (this.userInfo.profilePhoto) {
+          // 기존 프로필 사진 URL을 유지하도록 서버에 전달
+          formData.append("profilePhoto", this.userInfo.profilePhoto);
         }
         console.log(formData);
         await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/user/update`, formData, {
