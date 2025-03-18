@@ -74,7 +74,7 @@
       },
       goToInfluencerDetail(nickname) {
         // 유저 닉네임으로 쿼리 파라미터 전달하여 이동
-        window.location.href = `${process.env.VUE_APP_API_BASE_URL}/user/yourpage?nickName=${encodeURIComponent(nickname)}`;
+        window.location.href = `https://wwww.stomachforce.shop/user/yourpage?nickName=${encodeURIComponent(nickname)}`;
       }
     }
   };
