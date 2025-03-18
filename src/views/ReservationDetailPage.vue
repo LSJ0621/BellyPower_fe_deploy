@@ -90,7 +90,7 @@ methods: {
   async fetchReservationDetail() {
     try {
       const response = await axios.get(
-        `http://localhost:8080/reservation/${this.reservationId}/detail`
+        `${process.env.VUE_APP_API_BASE_URL}/${this.reservationId}/detail`
       );
       this.reservation = response.data;
       console.log(response.data)
