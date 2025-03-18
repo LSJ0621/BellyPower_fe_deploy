@@ -194,7 +194,7 @@
             });
           }
 
-          await axios.post(
+          const response = await axios.post(
             `${process.env.VUE_APP_API_BASE_URL}/announcement/update/${this.announcement.id}`,
             formData,
             {
@@ -203,6 +203,7 @@
               }
             }
           );
+          console.log(response.data);
 
           alert("공지사항이 성공적으로 수정되었습니다.");
           this.$router.push("/notice");
