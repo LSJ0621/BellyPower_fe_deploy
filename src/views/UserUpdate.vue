@@ -185,10 +185,7 @@ export default {
         if (this.profilePhotoFile) {
           // ✅ 새로 업로드된 파일이 있으면 그대로 추가
           formData.append("profilePhoto", this.profilePhotoFile);
-        } else {
-          // ✅ 기존 프로필 사진이지만 변경하지 않은 경우 null로 설정
-          formData.append("profilePhoto", null);
-        } 
+        }
         console.log(formData);
         await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/user/update`, formData, {
           headers: {
