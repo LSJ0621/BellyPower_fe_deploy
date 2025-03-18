@@ -183,11 +183,15 @@ export default {
         formData.append("phoneNumber", this.userInfo.userPhoneNumber);
         formData.append("gender", this.userInfo.gender);
         if (this.profilePhotoFile) {
-          formData.append("profilePhoto", this.profilePhotoFile);
-        } else if (this.userInfo.profilePhoto) {
-          // 기존 프로필 사진 URL을 유지하도록 서버에 전달
-          formData.append("profilePhoto", this.userInfo.profilePhoto);
-        }
+      // ✅ 새로 업로드된 파일이 있으면 그대로 추가
+        formData.append("profilePhoto", this.profilePhotoFile);
+          } else {
+            // ✅ 기존 프로필 사진이 있을 경우, URL의 이미지를 Blob으로 변환 후 전송
+            if (this.userInfo.profilePhoto) {
+              const existingImageBlob = await this.urlToBlob(this.userInfo.profilePhoto);
+              formData.append("profilePhoto", existingImageBlob, "profilePhoto.jpg");
+            }
+          }
         console.log(formData);
         await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/user/update`, formData, {
           headers: {
