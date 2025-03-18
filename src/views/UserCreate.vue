@@ -252,6 +252,14 @@
       >
         {{ errorMessage }}
       </v-snackbar>
+      <v-snackbar
+        v-model="showSuccess"
+        color="success"
+        timeout="3000"
+        location="top"
+      >
+        회원가입에 성공하였습니다!
+      </v-snackbar>
     </v-container>
   </template>
   
@@ -264,6 +272,7 @@
         currentStep: 1,
         loading: false,
         showError: false,
+        showSuccess: false, 
         errorMessage: "",
         showPassword: false,
         isStep1Valid: false,
@@ -374,6 +383,7 @@
           };
           
           await axios.post(`${process.env.VUE_APP_API_BASE_URL}/user/create`, data);
+          alert("회원가입에 성공하였습니다.");
           this.$router.push("/login");
         } catch (e) {
           this.errorMessage = e.response?.data || "회원가입에 실패했습니다";
