@@ -680,25 +680,25 @@ export default {
       }
     },
     async fetchUserInfo() {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    return; // 토큰 없으면 호출하지 않음
-  }
-
-  try {
-    const response = await axios.get(
-      `${process.env.VUE_APP_API_BASE_URL}/user/userInfo`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return; // 토큰 없으면 호출하지 않음
       }
-    );
-    this.loginUserNickName = response.data.userNickName;
-  } catch (error) {
-    console.error("로그인 유저 정보 조회 실패:", error);
-  }
-},
+
+      try {
+        const response = await axios.get(
+          `${process.env.VUE_APP_API_BASE_URL}/user/userInfo`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+        this.loginUserNickName = response.data.userNickName;
+      } catch (error) {
+        console.error("로그인 유저 정보 조회 실패:", error);
+      }
+    },
     async fetchCategories() {
       try {
         const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/restaurant/categories`);

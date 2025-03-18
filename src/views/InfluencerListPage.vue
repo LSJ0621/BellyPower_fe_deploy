@@ -55,7 +55,8 @@
       };
     },
     created() {
-      this.fetchInfluencers();
+        this.fetchUserInfo();
+        this.fetchInfluencers();
     },
     methods: {
       async fetchInfluencers() {
@@ -72,9 +73,35 @@
           this.isLoading = false;
         }
       },
+      async fetchUserInfo() {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            return; // 토큰 없으면 호출하지 않음
+        }
+
+        try {
+            const response = await axios.get(
+            `${process.env.VUE_APP_API_BASE_URL}/user/userInfo`,
+            {
+                headers: {
+                Authorization: `Bearer ${token}`
+                }
+            }
+            );
+            this.loginUserNickName = response.data.userNickName;
+        } catch (error) {
+            console.error("로그인 유저 정보 조회 실패:", error);
+        }
+    },
       goToInfluencerDetail(nickname) {
         // 유저 닉네임으로 쿼리 파라미터 전달하여 이동
-        window.location.href = `https://wwww.stomachforce.shop/user/yourpage?nickName=${encodeURIComponent(nickname)}`;
+        const loginUserNickName = this.loginUserNickName;
+        if (loginUserNickName === nickname) {
+            this.$router.push({ path: "/user/mypage" });
+        } else {
+            this.$router.push({ path: "/user/yourpage", query: { nickName: nickname } });
+        }
+        // window.location.href = `https://wwww.stomachforce.shop/user/yourpage?nickName=${encodeURIComponent(nickname)}`;
       }
     }
   };
