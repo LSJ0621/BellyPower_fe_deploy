@@ -202,7 +202,6 @@ export default {
     },
     googleLogin(){
       const auth_uri = `${this.googleUrl}?client_id=${this.googleClientID}&redirect_uri=${this.googleRedirectUrl}&response_type=code&scope=${this.googleScope}`;
-      console.log("Google Auth URL:", auth_uri);
       window.location.href= auth_uri;
     }
   }
