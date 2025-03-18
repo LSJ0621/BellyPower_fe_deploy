@@ -31,7 +31,7 @@
                       <v-text-field
                         v-model="identify"
                         label="아이디"
-                        :rules="[
+                        :rules="isGoogleLogin ? [] :[
                           v => !!v || '아이디를 입력해주세요',
                           v => idRule.test(v) || '아이디는 영어, 숫자, 특수문자(?,!) 중 2가지 이상을 섞어 8자리 이상이어야 합니다'
                         ]"
